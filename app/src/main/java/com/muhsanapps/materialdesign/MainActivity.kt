@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity() {
             showDatePickerDialog();
         }
 
-
         /*
         // BroadCast Receiver testing
         val intent : Intent = intent
@@ -44,17 +43,19 @@ class MainActivity : AppCompatActivity() {
         //Chips material
         binding.chip0.setOnCloseIconClickListener {
             binding.chip0.visibility = View.GONE
+            Toast.makeText(applicationContext, "Cancel", Toast.LENGTH_SHORT).show()
         }
         binding.chip1.setOnClickListener {
 //            binding.chip1.isCheckable = true
 //            binding.chip1.isCheckable = false
 //            binding.chip1.chipBackgroundColor = ColorStateList.valueOf(resources.getColor(R.color.purple_200))
 
-            if (binding.chip1.isCheckable == true){
-                binding.chip1.chipBackgroundColor = ColorStateList.valueOf(resources.getColor(R.color.purple_200))
-            }
-            else if (binding.chip1.isCheckable == false){
-                binding.chip1.chipBackgroundColor = ColorStateList.valueOf(resources.getColor(R.color.white))
+            if (binding.chip1.isCheckable == true) {
+                binding.chip1.chipBackgroundColor =
+                    ColorStateList.valueOf(resources.getColor(R.color.purple_200))
+            } else if (binding.chip1.isCheckable == false) {
+                binding.chip1.chipBackgroundColor =
+                    ColorStateList.valueOf(resources.getColor(R.color.white))
             }
         }
 
@@ -69,6 +70,14 @@ class MainActivity : AppCompatActivity() {
             getFolderPermission()
         }
 
+        //Radio Buttons
+        binding.radioGroup.setOnCheckedChangeListener{ group, checkedId->
+            if (checkedId == R.id.home){ Toast.makeText(applicationContext, "Home", Toast.LENGTH_SHORT).show() }
+            if (checkedId == R.id.office){Toast.makeText(applicationContext, "Office", Toast.LENGTH_SHORT).show()}
+            if (checkedId == R.id.school){Toast.makeText(applicationContext, "School", Toast.LENGTH_SHORT).show()}
+            if (checkedId == R.id.shop){Toast.makeText(applicationContext, "Shop", Toast.LENGTH_SHORT).show()}
+            if (checkedId == R.id.party){Toast.makeText(applicationContext, "Party", Toast.LENGTH_SHORT).show()}
+        }
 
     }
 
@@ -80,13 +89,14 @@ class MainActivity : AppCompatActivity() {
         val targetDirectory = "Android%2Fmedia%2Fcom.whatsapp%2FWhatsApp%2FMedia%2F.Statuses"
         var uri = intent.getParcelableExtra<Uri>("android.provider.extra.INITIAL_URI") as Uri
         var scheme = uri.toString()
-        scheme = scheme.replace("/root/","/tree/")
-        scheme+="%3A$targetDirectory"
+        scheme = scheme.replace("/root/", "/tree/")
+        scheme += "%3A$targetDirectory"
         uri = Uri.parse(scheme)
-        intent.putExtra("android.provider.extra.INITIAL_URI",uri)
+        intent.putExtra("android.provider.extra.INITIAL_URI", uri)
         intent.putExtra("android.content.extra.SHOW_ADVANCED", true)
-        startActivityForResult(intent,1234)
+        startActivityForResult(intent, 1234)
     }
+
     // Only android 11 Code write
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -95,7 +105,10 @@ class MainActivity : AppCompatActivity() {
             binding.tvDate.text = treeUri.toString()
 
             if (treeUri != null) {
-                contentResolver.takePersistableUriPermission(treeUri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                contentResolver.takePersistableUriPermission(
+                    treeUri,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
                 val fileDoc = DocumentFile.fromTreeUri(applicationContext, treeUri)
             }
 
@@ -103,8 +116,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     //Editor Box
-    private fun process(){
-        Toast.makeText(applicationContext, binding.editTextTextPersonName.text.toString(), Toast.LENGTH_SHORT).show()
+    private fun process() {
+        Toast.makeText(
+            applicationContext,
+            binding.editTextTextPersonName.text.toString(),
+            Toast.LENGTH_SHORT
+        ).show()
         binding.editTextTextPersonName.setText("")
     }
 
@@ -117,6 +134,6 @@ class MainActivity : AppCompatActivity() {
         materialDatePicker.addOnPositiveButtonClickListener {
             binding.tvDate.text = "" + materialDatePicker.headerText
         }
-        materialDatePicker.show(supportFragmentManager,"TAG")
+        materialDatePicker.show(supportFragmentManager, "TAG")
     }
 }
