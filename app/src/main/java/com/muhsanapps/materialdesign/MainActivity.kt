@@ -8,12 +8,16 @@ import android.os.Build
 import android.os.Bundle
 import android.os.storage.StorageManager
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.documentfile.provider.DocumentFile
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.muhsanapps.materialdesign.databinding.ActivityMainBinding
+import com.muhsanapps.materialdesign.services.NewService
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,12 +26,14 @@ class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // Material DatePicker Button
         binding.btnPickDate.setOnClickListener {
-            showDatePickerDialog();
+            showDatePickerDialog()
         }
 
         /*
@@ -45,18 +51,25 @@ class MainActivity : AppCompatActivity() {
             binding.chip0.visibility = View.GONE
             Toast.makeText(applicationContext, "Cancel", Toast.LENGTH_SHORT).show()
         }
-        binding.chip1.setOnClickListener {
+        binding.checkFromChip.setOnClickListener {
 //            binding.chip1.isCheckable = true
 //            binding.chip1.isCheckable = false
 //            binding.chip1.chipBackgroundColor = ColorStateList.valueOf(resources.getColor(R.color.purple_200))
 
-            if (binding.chip1.isCheckable == true) {
-                binding.chip1.chipBackgroundColor =
-                    ColorStateList.valueOf(resources.getColor(R.color.purple_200))
-            } else if (binding.chip1.isCheckable == false) {
-                binding.chip1.chipBackgroundColor =
-                    ColorStateList.valueOf(resources.getColor(R.color.white))
+            if (binding.checkFromChip.isCheckable) {
+                binding.checkFromChip.chipBackgroundColor =
+                    ColorStateList.valueOf(resources.getColor(R.color.checkColor))
+            } else {
+
+//                val red =  ContextCompat.getColor(this, R.color.UnCheckColor)
+//                binding.checkFromChip.chipBackgroundColor = red
+//                binding.checkFromChip.chipBackgroundColor = ColorStateList.valueOf(resources.getColor(R.color.UnCheckColor))
+//                binding.checkFromChip.text = "Please Check"
             }
+        }
+        binding.chip3.setOnClickListener {
+            binding.chip3.chipBackgroundColor =
+                ColorStateList.valueOf(resources.getColor(R.color.UnCheckColor))
         }
 
         //Editor Box
@@ -71,14 +84,40 @@ class MainActivity : AppCompatActivity() {
         }
 
         //Radio Buttons
-        binding.radioGroup.setOnCheckedChangeListener{ group, checkedId->
-            if (checkedId == R.id.home){ Toast.makeText(applicationContext, "Home", Toast.LENGTH_SHORT).show() }
-            if (checkedId == R.id.office){Toast.makeText(applicationContext, "Office", Toast.LENGTH_SHORT).show()}
-            if (checkedId == R.id.school){Toast.makeText(applicationContext, "School", Toast.LENGTH_SHORT).show()}
-            if (checkedId == R.id.shop){Toast.makeText(applicationContext, "Shop", Toast.LENGTH_SHORT).show()}
-            if (checkedId == R.id.party){Toast.makeText(applicationContext, "Party", Toast.LENGTH_SHORT).show()}
+        binding.radioGroup.setOnCheckedChangeListener { group, checkedId ->
+            if (checkedId == R.id.home)
+                Toast.makeText(applicationContext, "Home", Toast.LENGTH_SHORT).show()
+
+            if (checkedId == R.id.office)
+                Toast.makeText(applicationContext, "Office", Toast.LENGTH_SHORT).show()
+
+            if (checkedId == R.id.school)
+                Toast.makeText(applicationContext, "School", Toast.LENGTH_SHORT).show()
+
+            if (checkedId == R.id.shop)
+                Toast.makeText(applicationContext, "Shop", Toast.LENGTH_SHORT).show()
+
+            if (checkedId == R.id.party)
+                Toast.makeText(applicationContext, "Party", Toast.LENGTH_SHORT).show()
+
         }
 
+        // Service Button Code
+        binding.startService.setOnClickListener {
+            startService(Intent(this, NewService::class.java))
+        }
+        binding.stopService.setOnClickListener {
+            stopService(Intent(this, NewService::class.java))
+        }
+
+        val cities = arrayOf("Kamber","Rawalpindi","Islamabad","Lahore","Karachi")// Create Array
+        val adapter = ArrayAdapter(this@MainActivity, R.layout.drop_down_item, cities)
+
+        binding.filledExposed.setAdapter(adapter)
+
+        binding.filledExposed.setOnItemClickListener { parent, view, position, id ->
+            Toast.makeText(this@MainActivity, "You Selected ${position.toString()}",Toast.LENGTH_SHORT).show()
+        }
     }
 
     // Only android 11 Code write
@@ -117,17 +156,31 @@ class MainActivity : AppCompatActivity() {
 
     //Editor Box
     private fun process() {
+        // Timer COde
         Toast.makeText(
             applicationContext,
             binding.editTextTextPersonName.text.toString(),
             Toast.LENGTH_SHORT
         ).show()
         binding.editTextTextPersonName.setText("")
+        binding.progressBar.visibility = View.INVISIBLE
+
+//        val thread: Thread = object : Thread() {
+//            override fun run() {
+//                try {
+//                    Toast.makeText(this@MainActivity, " By BY By Muhsan Javed", Toast.LENGTH_SHORT).show()
+//                    binding.progressBar.visibility = View.GONE
+//                    sleep(1000)
+//                } catch (e: Exception) {
+//                    e.printStackTrace()
+//                }
+//            }
+//        }
+//        thread.start()
     }
 
     //showDatePickerDialog Function
     private fun showDatePickerDialog() {
-
         val materialDatePicker: MaterialDatePicker<*> =
             MaterialDatePicker.Builder.datePicker().setTitleText("Select Date").build()
 

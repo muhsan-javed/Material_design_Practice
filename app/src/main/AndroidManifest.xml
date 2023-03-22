@@ -27,6 +27,8 @@
 <!--                <data android:mimeType="txt/*"/>-->
             </intent-filter>
         </activity>
+
+        <service android:name=".services.NewService"/>
     </application>
 
 </manifest>

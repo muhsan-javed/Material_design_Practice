@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">Material design</string>
+    <string name="date_display_here">Date Display here</string>
+    <string name="pick_date">Pick Date</string>
+    <string name="enter_email">Enter email</string>
+    <string name="login">login</string>
+    <string name="home">Home</string>
+    <string name="office">Office</string>
+    <string name="school">School</string>
+    <string name="party">Party</string>
+    <string name="shop">Shop</string>
+    <string name="check_from">Check From</string>
+    <string name="hello_friend">Hello Friend</string>
+    <string name="hi">Hi</string>
+    <string name="specific_folder_permission">specific folder permission Android 11</string>
+    <string name="check_out">check out</string>
+    <string name="start_service">Start Service</string>
+    <string name="stop_service">Stop Service</string>
 </resources>
