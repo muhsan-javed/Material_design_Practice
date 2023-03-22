@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -110,13 +109,18 @@ class MainActivity : AppCompatActivity() {
             stopService(Intent(this, NewService::class.java))
         }
 
-        val cities = arrayOf("Kamber","Rawalpindi","Islamabad","Lahore","Karachi")// Create Array
+        val cities =
+            arrayOf("Kamber", "Rawalpindi", "Islamabad", "Lahore", "Karachi")// Create Array
         val adapter = ArrayAdapter(this@MainActivity, R.layout.drop_down_item, cities)
 
         binding.filledExposed.setAdapter(adapter)
 
         binding.filledExposed.setOnItemClickListener { parent, view, position, id ->
-            Toast.makeText(this@MainActivity, "You Selected ${position.toString()}",Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this@MainActivity,
+                "You Selected ${position.toString()}",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 

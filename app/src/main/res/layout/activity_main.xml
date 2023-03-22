@@ -17,8 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="5dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="16dp"
             android:hint="@string/date_display_here"
             android:padding="20dp"
@@ -31,27 +31,25 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
-            android:layout_marginTop="5dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="16dp"
             android:text="@string/pick_date" />
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="16dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-            android:hint="Type"
-            >
+            android:hint="Type">
 
             <AutoCompleteTextView
+                android:id="@+id/filled_exposed"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/filled_exposed"
-                android:inputType="none"
-                />
+                android:inputType="none" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -60,8 +58,8 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_gravity="center"
-            android:layout_marginTop="8dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:autofillHints="emailAddress"
             android:background="@drawable/edit_box_background"
@@ -80,8 +78,8 @@
             android:layout_width="380dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="5dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="16dp"
             android:text="@string/login" />
 
@@ -89,8 +87,8 @@
             android:id="@+id/radioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="16dp"
             android:checkedButton="@id/home"
             android:orientation="horizontal">
@@ -141,8 +139,8 @@
             android:id="@+id/linearLayout2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="16dp"
             android:layout_weight="4"
             android:orientation="horizontal">
@@ -200,8 +198,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="5dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="16dp"
             android:text="@string/specific_folder_permission"
             android:textAllCaps="false" />
@@ -212,15 +210,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="5dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="16dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
             android:layout_marginEnd="16dp"
             android:layout_weight="3"
             android:orientation="horizontal">
@@ -228,10 +226,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:fontFamily="sans-serif-medium"
                 android:text="Service: "
-                android:layout_gravity="center"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -239,27 +237,26 @@
                 android:id="@+id/startService"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:textColor="@color/white"
-                android:background="@drawable/button_bg"
                 android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/button_bg"
                 android:fontFamily="sans-serif-medium"
-                android:text="@string/start_service" />
+                android:text="@string/start_service"
+                android:textColor="@color/white" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/stopService"
                 android:layout_width="wrap_content"
-                android:layout_gravity="center"
-                android:textColor="@color/white"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_gravity="center"
                 android:layout_marginStart="8dp"
+                android:layout_weight="1"
                 android:background="@drawable/button_bg"
                 android:fontFamily="sans-serif-medium"
-                android:text="@string/stop_service" />
+                android:text="@string/stop_service"
+                android:textColor="@color/white" />
 
         </LinearLayout>
-
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>
