@@ -3,14 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:scrolling_image_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/scrollViewMain">
 
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:visibility="gone"
+        android:id="@+id/mainLinearLayout"
         tools:context=".MainActivity">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="20dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="16dp"
+            android:id="@+id/cardViewImage"
+            >
+            <com.q42.android.scrollingimageview.ScrollingImageView
+                android:id="@+id/scrolling_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                scrolling_image_view:speed="20dp"
+                scrolling_image_view:contiguous="false"
+                scrolling_image_view:source="@drawable/istanbul" />
+
+        </androidx.cardview.widget.CardView>
+
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_date"
@@ -204,6 +228,16 @@
             android:text="@string/specific_folder_permission"
             android:textAllCaps="false" />
 
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_path"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="16dp"
+            android:textSize="18sp"
+            android:fontFamily="sans-serif-medium"/>
+
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyle"
@@ -258,6 +292,20 @@
 
         </LinearLayout>
 
+        <Button
+            android:id="@+id/takeScreenShot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="16dp"
+            android:textSize="16sp"
+            android:layout_weight="1"
+            style="@style/Widget.Material3.Button"
+            android:fontFamily="sans-serif-medium"
+            android:text="Take ScreenShot"
+            android:textColor="@color/white" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

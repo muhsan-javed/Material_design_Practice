@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.muhsanapps.materialdesign">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -13,6 +16,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialDesign"
         tools:targetApi="31">
+        <receiver
+            android:name=".receivers.AirplaneModeChangeReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -21,14 +29,24 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
 
-<!--                BroadCast Receiver testing -->
-<!--                <action android:name="android.intent.action.SEND"/>-->
-<!--                <category android:name="android.intent.category.DEFAULT"/>-->
-<!--                <data android:mimeType="txt/*"/>-->
+                <!-- BroadCast Receiver testing -->
+                <!-- <action android:name="android.intent.action.SEND"/> -->
+                <!-- <category android:name="android.intent.category.DEFAULT"/> -->
+                <!-- <data android:mimeType="txt/*"/> -->
             </intent-filter>
         </activity>
 
-        <service android:name=".services.NewService"/>
+        <service android:name=".services.NewService" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.muhsanapps.materialdesign.fileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

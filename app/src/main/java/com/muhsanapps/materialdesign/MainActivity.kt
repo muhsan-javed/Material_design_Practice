@@ -3,6 +3,8 @@ package com.muhsanapps.materialdesign
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -12,16 +14,29 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricManager
+import androidx.biometric.BiometricPrompt
+import androidx.biometric.BiometricPrompt.PromptInfo
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.documentfile.provider.DocumentFile
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.muhsanapps.materialdesign.databinding.ActivityMainBinding
+import com.muhsanapps.materialdesign.receivers.AirplaneModeChangeReceiver
 import com.muhsanapps.materialdesign.services.NewService
+import java.io.File
 import java.util.*
-import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    lateinit var imageUri : Uri
+    lateinit var receiver: AirplaneModeChangeReceiver
+
+    lateinit var biometricPrompt: BiometricPrompt
+    lateinit var promptInfo: PromptInfo
+    //var mainLayout: ConstraintLayout? = null
+
 
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,6 +49,62 @@ class MainActivity : AppCompatActivity() {
         binding.btnPickDate.setOnClickListener {
             showDatePickerDialog()
         }
+        // BroadCast Receiver Code
+//        receiver = AirplaneModeChangeReceiver()
+//        IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED).also {
+//            registerReceiver(receiver, it)
+//        }
+
+        // BiometricManager Code
+       /* val biometricManager = BiometricManager.from(this)
+        when (biometricManager.canAuthenticate()) {
+            BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> Toast.makeText(
+                this,
+                "Device Doesn't have fingerprint",
+                Toast.LENGTH_SHORT
+            ).show()
+            BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE -> Toast.makeText(
+                this,
+                "Not Working",
+                Toast.LENGTH_SHORT
+            ).show()
+            BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> Toast.makeText(
+                this,
+                "No fingerprint Assigned",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+
+        val executor = ContextCompat.getMainExecutor(this)
+
+        biometricPrompt = BiometricPrompt(this@MainActivity, executor, object : BiometricPrompt.AuthenticationCallback(){
+            override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                super.onAuthenticationError(errorCode, errString)
+            }
+
+            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                super.onAuthenticationSucceeded(result)
+//                Toast.makeText(this@MainActivity, "login Success", Toast.LENGTH_SHORT).show()
+//                binding.mainLinearLayout.visibility = View.VISIBLE
+            }
+
+            override fun onAuthenticationFailed() {
+                super.onAuthenticationFailed()
+            }
+
+
+        })
+
+        promptInfo = PromptInfo.Builder().setTitle("Material Design")
+            .setDescription("Use FingerPrint")
+            .setDeviceCredentialAllowed(true)
+            .build()
+
+        biometricPrompt.authenticate(promptInfo)
+*/
+
+
+
 
         /*
         // BroadCast Receiver testing
@@ -122,6 +193,47 @@ class MainActivity : AppCompatActivity() {
                 Toast.LENGTH_SHORT
             ).show()
         }
+
+        binding.scrollingBackground.start()
+
+        // Take ScreenShot Code
+        //val bitmap = getBitmapFromView(binding.mainLinearLayout)
+
+        //
+        imageUri = createImageUri()
+       // storeBitmap(bitmap)
+
+        // btnTakeScreenShot
+        binding.takeScreenShot.setOnClickListener {
+            val bitmap = getBitmapFromView(binding.mainLinearLayout)
+            storeBitmap(bitmap)
+
+        }
+    }
+
+    // create background image to save bitmap step 1
+    private fun getBitmapFromView(view: View): Bitmap {
+        val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        val bg = view.background
+        bg.draw(canvas) // Show error
+        view.draw(canvas)
+        return bitmap
+    }
+
+    // Ass file proivder path
+    private fun createImageUri(): Uri {
+        val image  = File(applicationContext.filesDir, "camera_photo.png")
+        return FileProvider.getUriForFile(
+            applicationContext,
+            "com.muhsanapps.materialdesign.fileProvider",
+            image)
+    }
+    // Store image output Stream Asset
+    private fun storeBitmap(bitmap: Bitmap){
+        val outputStream = applicationContext.contentResolver.openOutputStream(imageUri)
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+        outputStream!!.close()
     }
 
     // Only android 11 Code write
@@ -145,13 +257,10 @@ class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
             val treeUri = data?.data
-            binding.tvDate.text = treeUri.toString()
+            binding.tvPath.text = treeUri.toString()
 
             if (treeUri != null) {
-                contentResolver.takePersistableUriPermission(
-                    treeUri,
-                    Intent.FLAG_GRANT_READ_URI_PERMISSION
-                )
+                contentResolver.takePersistableUriPermission(treeUri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 val fileDoc = DocumentFile.fromTreeUri(applicationContext, treeUri)
             }
 
@@ -192,5 +301,10 @@ class MainActivity : AppCompatActivity() {
             binding.tvDate.text = "" + materialDatePicker.headerText
         }
         materialDatePicker.show(supportFragmentManager, "TAG")
+    }
+
+    override fun onStop() {
+        super.onStop()
+       // unregisterReceiver(receiver)
     }
 }
